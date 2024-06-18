@@ -28,23 +28,34 @@ def view_pdf(request, pdf_id):
         return HttpResponse(f.read(), content_type='application/pdf')
     
 def pdf_and_form(request, pdf_id):
-    # Obtenha o objeto PDF a partir do ID
-    pdf_document = get_object_or_404(PDFDocument, pk=pdf_id)
-    
-    # Renderize a página pdf_and_form.html e passe o PDFDocument como contexto
-    return render(request, 'app/pdf_and_form.html', {'pdf_document': pdf_document})
+    # Recupera o documento PDF pelo seu ID
+    try:
+        pdf = PDFDocument.objects.get(id=pdf_id)
+    except PDFDocument.DoesNotExist:
+        return HttpResponse("PDF not found", status=404)
 
-@csrf_exempt
+    if request.method == 'POST':
+        # Processa os dados submetidos pelo formulário
+        name = request.POST.get('name')
+        option1 = request.POST.get('checkbox1') == 'on'
+        option2 = request.POST.get('checkbox2') == 'on'
+
+        # Exemplo: salvando os dados em algum lugar
+        # Aqui você deve implementar a lógica necessária para processar os dados do formulário
+        # Por exemplo, salvar em banco de dados ou fazer alguma outra operação
+
+        # Redireciona para alguma página após o processamento dos dados
+        return redirect('home')  # Redireciona para a página inicial, ajuste conforme necessário
+    else:
+        # Caso GET, apenas renderiza o template com o formulário
+        return render(request, 'app/pdf_and_form.html', {'pdf': pdf})
+    
+
 def submit_details(request, pdf_id):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        checkbox1 = request.POST.get('checkbox1') == 'on'
-        checkbox2 = request.POST.get('checkbox2') == 'on'
-
-        # Process the data (e.g., save to the database, send an email, etc.)
-        # ...
-
-        return HttpResponse(f"Name: {name}, Option 1: {checkbox1}, Option 2: {checkbox2}")
+        # Processar os dados do formulário aqui
+        return redirect('home')  # Redirecionar para a página inicial após o processamento
     else:
-        return HttpResponse("Invalid request method.")
+        # Tratar o caso de método GET, se necessário
+        return HttpResponse("Method not allowed", status=405)
     

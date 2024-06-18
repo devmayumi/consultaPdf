@@ -1,3 +1,17 @@
+.container {
+  display: flex;
+}
+.pdf-viewer {
+  flex: 1;
+  height: 100vh;
+}
+.form-container {
+  flex: 1;
+  padding: 20px;
+}
+
+
+
 ul {
     list-style-type: none;
   }
