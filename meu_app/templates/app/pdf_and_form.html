@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Viewer and Form</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        .pdf-viewer {
+            flex: 1;
+            height: 100vh;
+        }
+        .form-container {
+            flex: 1;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pdf-viewer">
+            <embed src="{{ pdf.pdf.url }}" type="application/pdf" width="100%" height="100%">
+        </div>
+        <div class="form-container">
+            <h2>Submit Details</h2>
+            <form method="post" action="{% url 'submit_details' pdf.id %}">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name"><br><br>
+
+                <label for="checkbox1">Option 1:</label>
+                <input type="checkbox" id="checkbox1" name="checkbox1"><br><br>
+
+                <label for="checkbox2">Option 2:</label>
+                <input type="checkbox" id="checkbox2" name="checkbox2"><br><br>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

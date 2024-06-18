@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de PDFs</title>
+</head>
+<body>
+    <h1>Listagem de PDFs</h1>
+    
+    <ul>
+        {% for pdf in pdfs %}
+            <li>
+                <a href="{% url 'pdf_and_form' pdf.id %}">{{ pdf.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
